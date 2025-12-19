@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="Northwind.Cms/Northwind.Cms.csproj" />
+  <Project Path="Northwind.Common/Northwind.Common.csproj" />
+  <Project Path="Northwind.DataContext/Northwind.DataContext.csproj" />
+  <Project Path="Northwind.EntityModels/Northwind.EntityModels.csproj" />
+  <Project Path="Northwind.Mvc/Northwind.Mvc.csproj" />
+  <Project Path="Northwind.PlaywrightTests/Northwind.PlaywrightTests.csproj" />
+  <Project Path="Northwind.UnitTests/Northwind.UnitTests.csproj" />
+  <Project Path="Northwind.WebApi/Northwind.WebApi.csproj" />
+</Solution>

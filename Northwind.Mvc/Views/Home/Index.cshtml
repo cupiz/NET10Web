@@ -1,0 +1,148 @@
+﻿@model Northwind.Mvc.ViewModels.HomeViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Northwind Dashboard";
+}
+
+<!-- Hero Section -->
+<div class="bg-primary text-white py-5 mb-4 rounded-3">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-shop me-2"></i>Northwind Traders
+        </h1>
+        <p class="lead mb-0">Enterprise Product Catalog & Inventory Management</p>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="display-6 text-primary mb-2">
+                    <i class="bi bi-folder2"></i>
+                </div>
+                <h2 class="display-5 fw-bold">@Model.CategoryCount</h2>
+                <p class="text-muted mb-0">Categories</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="display-6 text-success mb-2">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <h2 class="display-5 fw-bold">@Model.ProductCount</h2>
+                <p class="text-muted mb-0">Active Products</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="display-6 text-info mb-2">
+                    <i class="bi bi-truck"></i>
+                </div>
+                <h2 class="display-5 fw-bold">@Model.SupplierCount</h2>
+                <p class="text-muted mb-0">Suppliers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="display-6 @(Model.ReorderAlertCount > 0 ? "text-warning" : "text-secondary") mb-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <h2 class="display-5 fw-bold">@Model.ReorderAlertCount</h2>
+                <p class="text-muted mb-0">Reorder Alerts</p>
+                @if (Model.ReorderAlertCount > 0)
+                {
+                    <a asp-controller="Products" asp-action="ReorderAlerts" class="btn btn-warning btn-sm mt-2">
+                        View Alerts
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inventory Value Banner -->
+<div class="alert alert-info d-flex align-items-center mb-4" role="alert">
+    <i class="bi bi-cash-stack me-3 fs-4"></i>
+    <div>
+        <strong>Total Inventory Value:</strong>
+        <span class="ms-2 fs-5">@Model.TotalInventoryValue.ToString("C")</span>
+    </div>
+</div>
+
+<!-- Featured Categories -->
+<h3 class="mb-3">
+    <i class="bi bi-grid-3x3-gap me-2"></i>Featured Categories
+</h3>
+<div class="row g-4 mb-4">
+    @foreach (var category in Model.FeaturedCategories)
+    {
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm hover-shadow">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-tag me-2 text-primary"></i>@category.CategoryName
+                    </h5>
+                    <p class="card-text text-muted small">
+                        @(category.Description?.Length > 80 
+                            ? category.Description[..80] + "..." 
+                            : category.Description)
+                    </p>
+                    <span class="badge bg-primary">@category.ProductCount Products</span>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a asp-controller="Products" asp-action="ByCategory" asp-route-id="@category.CategoryId"
+                       class="btn btn-outline-primary btn-sm w-100">
+                        View Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Quick Links -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5><i class="bi bi-list-ul me-2"></i>Browse Products</h5>
+                <p class="text-muted">Explore our complete product catalog with filtering and search.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-primary">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5><i class="bi bi-folder2-open me-2"></i>Browse Categories</h5>
+                <p class="text-muted">View all product categories and their inventory status.</p>
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-secondary">
+                    View All Categories
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .hover-shadow {
+            transition: box-shadow 0.3s ease;
+        }
+        .hover-shadow:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+}

@@ -1,0 +1,39 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.mdf
+*.ldf
+
+# Umbraco
+umbraco/Data/
+umbraco/Logs/
+wwwroot/media/
+
+# Test results
+TestResults/
+
+# Packages
+packages/
+
+# Rider
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
